@@ -1,0 +1,48 @@
+{
+  "name": "sofa-source",
+  "version": "1.0.0",
+  "description": "website for sharing woftware engineering resources",
+  "main": "server.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc --build",
+    "start": "node dist/server.js",
+    "dev": "nodemon --exec tsx src/server.ts",
+    "prisma:studio": "prisma studio",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keroloshanna95/Sofa-Source.git"
+  },
+  "keywords": [
+    "Software",
+    "Book",
+    "Engineering",
+    "Resources"
+  ],
+  "author": "Kerolos Hanna",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/keroloshanna95/Sofa-Source/issues"
+  },
+  "homepage": "https://github.com/keroloshanna95/Sofa-Source#readme",
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.10.0",
+    "@prisma/client": "^7.10.0",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.6",
+    "express": "^5.2.1",
+    "morgan": "^1.12.1",
+    "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.4",
+    "@types/pg": "^8.23.1",
+    "nodemon": "^3.1.14",
+    "prisma": "^7.10.0",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
