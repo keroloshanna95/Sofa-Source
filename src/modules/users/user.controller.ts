@@ -1,37 +1,36 @@
 // import catchAsync from "../../utils/catchAsync";
 import { getUsersService, createUserService } from "./user.service";
-import type { APIResponse } from "../../utils/apiDTOs";
+import type { APIResponse, ExpressHandler } from "../../utils/apiDTOs";
+import { StatusCode, Messages } from "../../utils/apiDTOs";
 
-export const getUsersHandler: (req: Request, res: Response) => Promise<APIResponse<any>> = async (
-    req: Request,
-    res: Response,
-) => {
+export const getUsersHandler: ExpressHandler<unknown, APIResponse<any[]>> = async (req, res) => {
     try {
         const users = await getUsersService();
-        return res.status(200).json({
+        return res.status(StatusCode.OK).json({
             status: "success",
-            code: 200,
             data: { users: users },
-            message: "Users retrieved successfully",
+            message: Messages.SUCCESS,
         });
     } catch (error: Error | any) {
         console.error(error);
-        return res.status(500).json({
+        return res.status(StatusCode.ERROR).json({
             status: "error",
-            code: 500,
+            message: Messages.INTERNAL_ERROR,
             error: [{message: error.message}],
         });
     }
 };
 
-export const createUserHandler: (req: Request, res: Response) => Promise<APIResponse<any>> = async (
-    req: Request,
-    res: Response,
-) => {
+export const createUserHandler: ExpressHandler<unknown, APIResponse<any[]>> = async (req, res) => {
+
     if (!req.body.name || !req.body.email || !req.body.password) {
         console.log(req.body);
-        return res.status(400).json({
-            message: "Missing required fields",
+        return res.status(StatusCode.BAD_REQUEST).json({
+            status: "error",
+            message: Messages.BAD_REQUEST,
+            error: [{
+                message: "Missing required fields: name, email, and password are required.",
+            }],
         });
     }
 
@@ -44,17 +43,16 @@ export const createUserHandler: (req: Request, res: Response) => Promise<APIResp
 
     try {
         const user = await createUserService(newUser);
-        return res.status(201).json({
+        return res.status(StatusCode.CREATED).json({
             status: "success",
-            code: 201,
             data: user,
-            message: "User created successfully",
+            message: Messages.CREATED,
         });
     } catch (error: Error | any) {
         console.error(error);
-        return res.status(500).json({
+        return res.status(StatusCode.ERROR).json({
             status: "error",
-            code: 500,
+            message: Messages.INTERNAL_ERROR,
             error: [error.message],
         });
     }
